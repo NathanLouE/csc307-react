@@ -76,7 +76,7 @@ app.post("/users", (req, res) => {
   res.send();
 });
 
-app.delete("/users/", (req, res) => {
+app.delete("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result = findUserById(id);
   if (result === undefined) {
