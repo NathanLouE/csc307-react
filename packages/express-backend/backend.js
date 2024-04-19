@@ -82,7 +82,8 @@ app.delete("/users/:id", (req, res) => {
   if (result === undefined) {
     res.status(404).send("Resource not found.");
   } else {
-    res.delete(result);
+    users["users_list"].pop(result);
+    res.send();
   }
 });
 
