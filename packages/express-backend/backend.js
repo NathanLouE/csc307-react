@@ -1,5 +1,6 @@
 // backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
@@ -31,8 +32,9 @@ const users = {
         job: "Bartender"
       }
     ]
-  };
+};
 
+app.use(cors());
 app.use(express.json());
 
 const findUserByName = (name) => {
@@ -87,7 +89,12 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
+let minm = 100000; 
+let maxm = 999999; 
+
 const addUser = (user) => {
+  let random6DigitNum = Math.floor(Math.random() * (maxm - minm + 1)) + minm; 
+  user["id"] = random6DigitNum.toString();
   users["users_list"].push(user);
   return user;
 };
@@ -95,6 +102,7 @@ const addUser = (user) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
+  res.status(201).send("Created");
   res.send();
 });
 
