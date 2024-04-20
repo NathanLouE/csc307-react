@@ -36,20 +36,42 @@ const users = {
 app.use(express.json());
 
 const findUserByName = (name) => {
-    return users["users_list"].filter(
-      (user) => user["name"] === name
-    );
+  return users["users_list"].filter(
+    (user) => user["name"] === name
+  );
 };
-  
-app.get("/users", (req, res) => {
-    const name = req.query.name;
-    if (name != undefined) {
-      let result = findUserByName(name);
-      result = { users_list: result };
-      res.send(result);
-    } else {
-      res.send(users);
-    }
+
+const findUserByJob = (job) => {
+  return users["users_list"].filter(
+    (user) => user["job"] === job
+  );
+};
+
+const findUserByNameandJob = (name, job) => {
+  return users["users_list"].filter(
+    (user) => user["name"] === name && user["job"] === job
+    
+  );
+}
+
+app.get("/users", (req, res) => { // get by name and/or job
+  const name = req.query.name;
+  const job = req.query.job;
+  if (name != undefined && job != undefined) {
+    let result = findUserByNameandJob(name, job);
+    result = { users_list: result };
+    res.send(result);
+  } else if (name != undefined) {
+    let result = findUserByName(name);
+    result = { users_list: result };
+    res.send(result);
+  } else if (job != undefined) {
+    let result = findUserByJob(job);
+    result = { users_list: result };
+    res.send(result);
+  } else {
+    res.send(users);
+  }
 });
 
 const findUserById = (id) =>
