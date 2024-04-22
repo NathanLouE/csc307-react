@@ -1,5 +1,5 @@
 // backend.js
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
 
 const app = express();
@@ -101,19 +101,18 @@ const addUser = (user) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.status(201).send("Created");
-  res.send();
+  const json = addUser(userToAdd);
+  res.status(201).send(json);
 });
 
 app.delete("/users/:id", (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params["id"]; 
   let result = findUserById(id);
   if (result === undefined) {
     res.status(404).send("Resource not found.");
   } else {
     users["users_list"].pop(result);
-    res.send();
+    res.status(204).send();
   }
 });
 
