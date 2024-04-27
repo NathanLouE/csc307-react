@@ -1,6 +1,10 @@
 // backend.js
+<<<<<<< HEAD
 import express, { json } from "express";
 import {addUser, getUsers, findUserById, findUserByName, findUserByJob,} from "user-service.js";
+=======
+import express from "express";
+>>>>>>> parent of 5e3a0c5 (updated delete request for backend & id json in frontend)
 import cors from "cors";
 
 const app = express();
@@ -59,6 +63,7 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+<<<<<<< HEAD
   addUser(userToAdd)
   .then(json => res.status(201).send(json))
   .catch(error => {
@@ -74,6 +79,22 @@ app.delete("/users/:id", (req, res) => {
     res.status(204).send();
   })
   .catch(res.status(404).send("Resource not found."))
+=======
+  addUser(userToAdd);
+  res.status(201).send("Created");
+  res.send();
+});
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    users["users_list"].pop(result);
+    res.send();
+  }
+>>>>>>> parent of 5e3a0c5 (updated delete request for backend & id json in frontend)
 });
 
 app.listen(port, () => {
