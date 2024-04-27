@@ -1,7 +1,11 @@
 // backend.js
 <<<<<<< HEAD
+<<<<<<< HEAD
 import express, { json } from "express";
 import {addUser, getUsers, findUserById, findUserByName, findUserByJob,} from "user-service.js";
+=======
+import express from "express";
+>>>>>>> parent of 5e3a0c5 (updated delete request for backend & id json in frontend)
 =======
 import express from "express";
 >>>>>>> parent of 5e3a0c5 (updated delete request for backend & id json in frontend)
@@ -91,6 +95,36 @@ app.delete("/users/:id", (req, res) => {
   if (result === undefined) {
     res.status(404).send("Resource not found.");
   } else {
+<<<<<<< HEAD
+=======
+    res.send(result);
+  }
+});
+
+let minm = 100000; 
+let maxm = 999999; 
+
+const addUser = (user) => {
+  let random6DigitNum = Math.floor(Math.random() * (maxm - minm + 1)) + minm; 
+  user["id"] = random6DigitNum.toString();
+  users["users_list"].push(user);
+  return user;
+};
+
+app.post("/users", (req, res) => {
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  res.status(201).send("Created");
+  res.send();
+});
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+>>>>>>> parent of 5e3a0c5 (updated delete request for backend & id json in frontend)
     users["users_list"].pop(result);
     res.send();
   }
